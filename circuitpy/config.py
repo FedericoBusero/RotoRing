@@ -6,10 +6,15 @@ import rotaryio
 
 import time
 
-NUM_PIXELS = [60,40]
-#NUM_PIXELS = [48,24]
+# Led rings 60 & 40 pixels
+#NUM_PIXELS = [60,40]
+#LED_START = [40,0]
+
+# Led rings 48 & 24 pixels
+NUM_PIXELS = [48,24]
+LED_START = [24,0]
+
 pixels = neopixel.NeoPixel(board.IO1, NUM_PIXELS[0]+NUM_PIXELS[1], auto_write=False)
-LED_START = [40,0]
 
 # Rotary encoder setup
 encoder = rotaryio.IncrementalEncoder(board.IO10, board.IO9)

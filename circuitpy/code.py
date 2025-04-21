@@ -19,21 +19,15 @@ class RotaryGame:
         last_background_update = time.monotonic()
         self.startGame()
 
-    def draaiRing(self,ringnr,stappen):
-        stappen=-stappen
-        if stappen<0:
-            self.achtergrond_patroon[ringnr] = self.achtergrond_patroon[ringnr][stappen:] + self.achtergrond_patroon[ringnr][:stappen]
-        else:
-            self.achtergrond_patroon[ringnr] = self.achtergrond_patroon[ringnr][stappen:] + self.achtergrond_patroon[ringnr][:stappen]
-            
-    def updatePixels(self):
-        for ring in range (2):
-            for i in range(NUM_PIXELS[ring]):
-                pixels[i+LED_START[ring]] = self.kleur[self.achtergrond_patroon[ring][i]]
-
-        # Add foreground pixel to current pattern
-        pixels[self.current_position+LED_START[self.current_ring]] = self.cursor_color       
-        pixels.show()
+    def onButtonPressed(self):
+        old_ring = self.current_ring
+        self.current_ring = 1-old_ring
+        self.current_position = round(self.current_position*NUM_PIXELS[self.current_ring]/NUM_PIXELS[old_ring])
+        self.checkEndLevel()
+        
+    def onRotary(self,step):
+        self.current_position = (self.current_position + step) % NUM_PIXELS[self.current_ring]
+        self.checkEndLevel()
 
     def startGame(self):
         self.current_ring = 0
@@ -115,6 +109,18 @@ class RotaryGame:
             self.draaiRing(0,1)
             self.checkEndLevel()
 
+    def checkEndLevel(self):
+        status = self.achtergrond_patroon[self.current_ring][self.current_position]
+        if status == 1: # cursor komt op rode pixel
+            #failed, game over start level again
+            self.ledShowGameOver()
+            self.startGame()
+        elif status == 2: # doelpixel bereikt
+            #yes, next level
+            self.ledShowNextLevel()
+            self.level = self.level+1
+            self.startGame()
+
     def ledShowGameOver(self):
         ring = self.current_ring
         for i in range(NUM_PIXELS[ring]//2):
@@ -149,28 +155,6 @@ class RotaryGame:
             pixels[pos2+LED_START[ring]] = (0,0,25)
             pixels.show()
             time.sleep(0.01)
-
-    def checkEndLevel(self):
-        status = self.achtergrond_patroon[self.current_ring][self.current_position]
-        if status == 1: # cursor komt op rode pixel
-            #failed, game over start level again
-            self.ledShowGameOver()
-            self.startGame()
-        elif status == 2: # doelpixel bereikt
-            #yes, next level
-            self.ledShowNextLevel()
-            self.level = self.level+1
-            self.startGame()
-
-    def onButtonPressed(self):
-        old_ring = self.current_ring
-        self.current_ring = 1-old_ring
-        self.current_position = round(self.current_position*NUM_PIXELS[self.current_ring]/NUM_PIXELS[old_ring])
-        self.checkEndLevel()
-        
-    def onRotary(self,step):
-        self.current_position = (self.current_position + step) % NUM_PIXELS[self.current_ring]
-        self.checkEndLevel()
            
     def loop(self):
         # calls timerEvent() every timing_interval seconds
@@ -178,6 +162,19 @@ class RotaryGame:
         if current_time - self.last_background_update >= self.timing_interval:
             self.timerEvent()
             self.last_background_update = current_time
+
+    def draaiRing(self,ringnr,stappen):
+        self.achtergrond_patroon[ringnr] = self.achtergrond_patroon[ringnr][-stappen:] + self.achtergrond_patroon[ringnr][:-stappen]
+            
+    def updatePixels(self):
+        for ring in range (2):
+            for i in range(NUM_PIXELS[ring]):
+                pixels[i+LED_START[ring]] = self.kleur[self.achtergrond_patroon[ring][i]]
+
+        # Add foreground pixel to current pattern
+        pixels[self.current_position+LED_START[self.current_ring]] = self.cursor_color       
+        pixels.show()
+
 
 # main
 current_rotary_position = 0  
