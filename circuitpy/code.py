@@ -42,8 +42,8 @@ class RotaryGame:
         #shortcuts
         numpixel0 = NUM_PIXELS[0]
         numpixel1 = NUM_PIXELS[1]
-        
-        
+        #TODO shortcuts voor achtergrondpatroon
+       
         if self.level==1:
             self.current_ring = 1
             self.current_position = numpixel1*3//4
@@ -131,7 +131,7 @@ class RotaryGame:
 
     def ledShowGameOver(self):
         ring = self.current_ring
-        for i in range(NUM_PIXELS[ring]//2):
+        for i in range(NUM_PIXELS[ring]//2+1):
             pos1 = (self.current_position+i)%NUM_PIXELS[ring]
             pos2 = (self.current_position-i)%NUM_PIXELS[ring]
             pixels[pos1+LED_START[ring]] = (25,0,0)
