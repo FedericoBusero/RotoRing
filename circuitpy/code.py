@@ -1,5 +1,6 @@
 import time
 from config import *
+#TODO: meer commentaar
 
 class RotaryGame:
     current_ring = 0
@@ -36,70 +37,77 @@ class RotaryGame:
          [0 for i in range(NUM_PIXELS[0])],
          [0 for i in range(NUM_PIXELS[1])]
         ]
+        
+        
+        #shortcuts
+        numpixel0 = NUM_PIXELS[0]
+        numpixel1 = NUM_PIXELS[1]
+        
+        
         if self.level==1:
             self.current_ring = 1
-            self.current_position = NUM_PIXELS[1]*3//4
+            self.current_position = numpixel1*3//4
             self.achtergrond_patroon[0][0] = 2
 
         elif self.level==2:
-            self.current_position = NUM_PIXELS[0]//2
+            self.current_position = numpixel0//2
             self.achtergrond_patroon[0][0] = 2
 
         elif self.level==3:
             self.current_ring = 1
-            self.achtergrond_patroon[0][NUM_PIXELS[0]//2-1] = 2
+            self.achtergrond_patroon[0][numpixel0//2-1] = 2
 
         elif self.level==4:
             self.current_ring = 1
-            self.current_position = NUM_PIXELS[1]//2
+            self.current_position = numpixel1//2
             self.achtergrond_patroon[0][0] = 2
-            self.achtergrond_patroon[1][NUM_PIXELS[1]//4] = 1
-            self.achtergrond_patroon[1][NUM_PIXELS[1]*3//4] = 1
+            self.achtergrond_patroon[1][numpixel1//4] = 1
+            self.achtergrond_patroon[1][numpixel1*3//4] = 1
 
         elif self.level==5:
-            self.achtergrond_patroon[0][NUM_PIXELS[0]//2+1] = 2
+            self.achtergrond_patroon[0][numpixel0//2+1] = 2
             
             self.achtergrond_patroon[1][0] = 1
-            self.achtergrond_patroon[1][NUM_PIXELS[1]//2] = 1
+            self.achtergrond_patroon[1][numpixel1//2] = 1
             self.draaiRing(1,1)
             
-            self.achtergrond_patroon[0][NUM_PIXELS[0]*1//4] = 1
-            self.achtergrond_patroon[0][NUM_PIXELS[0]*3//4] = 1
+            self.achtergrond_patroon[0][numpixel0*1//4] = 1
+            self.achtergrond_patroon[0][numpixel0*3//4] = 1
 
         elif self.level==6:
             self.current_ring = 1
-            self.current_position = NUM_PIXELS[1]//3
+            self.current_position = numpixel1//3
             
-            self.achtergrond_patroon[0][NUM_PIXELS[0]//8] = 2
+            self.achtergrond_patroon[0][numpixel0//8] = 2
             
-            self.achtergrond_patroon[1][NUM_PIXELS[1]*1//4-1] = 1
-            self.achtergrond_patroon[1][NUM_PIXELS[1]*3//4+2] = 1
+            self.achtergrond_patroon[1][numpixel1*1//4-1] = 1
+            self.achtergrond_patroon[1][numpixel1*3//4+2] = 1
             
-            self.achtergrond_patroon[0][NUM_PIXELS[0]*0//4] = 1
-            self.achtergrond_patroon[0][NUM_PIXELS[0]*1//4] = 1
-            self.achtergrond_patroon[0][NUM_PIXELS[0]*2//4] = 1
-            self.achtergrond_patroon[0][NUM_PIXELS[0]*3//4] = 1
+            self.achtergrond_patroon[0][numpixel0*0//4] = 1
+            self.achtergrond_patroon[0][numpixel0*1//4] = 1
+            self.achtergrond_patroon[0][numpixel0*2//4] = 1
+            self.achtergrond_patroon[0][numpixel0*3//4] = 1
             
         elif self.level==7:
             self.current_ring = 1
             self.current_position = 2
-            for pos in range (NUM_PIXELS[0]//4):
+            for pos in range (numpixel0//4):
                 self.achtergrond_patroon[0][pos] = 1
-            for pos in range (NUM_PIXELS[0]//4-2):
-                self.achtergrond_patroon[0][NUM_PIXELS[0]//2+pos] = 1
-            for pos in range (NUM_PIXELS[1]//4-1):
-                self.achtergrond_patroon[1][NUM_PIXELS[1]//4 + pos] = 1
-            for pos in range (NUM_PIXELS[1]//4 -2):
-                self.achtergrond_patroon[1][NUM_PIXELS[1]*3//4 + pos] = 1
+            for pos in range (numpixel0//4-2):
+                self.achtergrond_patroon[0][numpixel0//2+pos] = 1
+            for pos in range (numpixel1//4-1):
+                self.achtergrond_patroon[1][numpixel1//4 + pos] = 1
+            for pos in range (numpixel1//4 -2):
+                self.achtergrond_patroon[1][numpixel1*3//4 + pos] = 1
 
-            self.achtergrond_patroon[0][NUM_PIXELS[0]//3] = 2
+            self.achtergrond_patroon[0][numpixel0//3] = 2
 
         elif self.level==8:
             self.current_ring = 1
-            self.current_position = NUM_PIXELS[1]//2
+            self.current_position = numpixel1//2
             self.achtergrond_patroon[0][0] = 1
-            self.achtergrond_patroon[1][NUM_PIXELS[1]*1//4] = 1
-            self.achtergrond_patroon[1][NUM_PIXELS[1]*3//4] = 1
+            self.achtergrond_patroon[1][numpixel1*1//4] = 1
+            self.achtergrond_patroon[1][numpixel1*3//4] = 1
 
             self.achtergrond_patroon[1][0] = 2
             self.timing_interval = 0.02
@@ -135,6 +143,7 @@ class RotaryGame:
             pixels[i+LED_START[ring]] = (25,0,0)
         pixels.show()
         time.sleep(1)
+        #TODO licht laten dimmen
 
 
     def ledShowNextLevel(self):
@@ -155,7 +164,9 @@ class RotaryGame:
             pixels[pos2+LED_START[ring]] = (0,0,25)
             pixels.show()
             time.sleep(0.01)
-           
+        time.sleep(0.200)
+        #TODO: licht laten dimmen
+        
     def loop(self):
         # calls timerEvent() every timing_interval seconds
         current_time = time.monotonic()
