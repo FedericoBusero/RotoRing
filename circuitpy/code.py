@@ -31,8 +31,15 @@ class RotaryGame:
             self.draaiRing(0,step)
         elif self.level==11 and self.current_ring==1:
             self.draaiRing(1,step)
+            elif self.level==13 and self.current_ring==1:
+            self.draaiRing(1,step)
+        elif self.level==13 and self.current_ring==0:
+            self.draaiRing(0,step)
+        elif self.level==14 and self.current_ring==1:
+            self.draaiRing(1,step)
+        elif self.level==15 and self.current_ring==0:
+            self.draaiRing(0,step)
         self.checkEndLevel()
-             
 
     def startGame(self):
         self.current_ring = 0
@@ -144,17 +151,82 @@ class RotaryGame:
             self.achtergrond_patroon[0][0] = 1
             self.timing_interval = 0.015
 
+        elif self.level==12:
+            self.current_ring = 0
+            self.current_position = 0
+            self.achtergrond_patroon[0][numpixel0//2+3] = 2
+            self.achtergrond_patroon[1][0] = 1
+            self.achtergrond_patroon[1][numpixel1//2] = 1
+            self.achtergrond_patroon[0][numpixel0//4*3+2] = 1
+            self.achtergrond_patroon[0][numpixel0//4*3-5] = 1
+            self.timing_interval = 0.03
+            for pos in range (6):
+                self.achtergrond_patroon[0][pos+12] = 1
+            for pos in range (3):
+                self.achtergrond_patroon[0][numpixel0//2-pos-3] = 1
+
+        elif self.level==13:
+            self.current_ring = 1
+            self.current_position = 20
+            self.achtergrond_patroon[1][0] = 2
+            for pos in range (numpixel1//4):
+                self.achtergrond_patroon[1][pos+1] = 1
+            for pos in range (numpixel1//4):
+                self.achtergrond_patroon[1][numpixel1-10+pos] = 1
+            for pos in range (numpixel0//6):
+                self.achtergrond_patroon[0][pos*6] = 1
+
+        elif self.level==14:
+            self.current_ring = 0
+            self.current_position = 0
+            self.achtergrond_patroon[1][numpixel1//2-1] = 2
+            for pos in range (numpixel0//4*3+1):
+                self.achtergrond_patroon[0][pos+5] = 1
+            for pos in range (3):
+                self.achtergrond_patroon[1][numpixel1//2-6+pos] = 1
+            for pos in range (3):
+                self.achtergrond_patroon[1][numpixel1//2+2+pos] = 1
+
+        elif self.level==15:
+            self.current_ring = 0
+            self.current_position = numpixel0//2+3
+            self.achtergrond_patroon[0][numpixel0*0+3] = 2
+            for pos in range (numpixel0//6):
+                self.achtergrond_patroon[0][pos*6] = 1
+            self.achtergrond_patroon[1][numpixel1//2] = 1
+            self.achtergrond_patroon[1][0] = 1
+            self.draaiRing(1,2)
+            self.timing_interval = 0.03
+
+        elif self.level==16:
+            self.current_ring = 0
+            self.current_position = numpixel0//2
+            self.achtergrond_patroon[0][0] = 2
+            for pos in range (3):
+                self.achtergrond_patroon[0][numpixel0*0+1+pos] = 1
+            for pos in range (3):
+                self.achtergrond_patroon[0][numpixel0-3+pos] = 1
+            self.achtergrond_patroon[1][0] = 1
+            self.achtergrond_patroon[1][numpixel1//3*2] = 1
+            self.achtergrond_patroon[1][numpixel1//3] = 1
+            self.draaiRing(1,2)
+            self.timing_interval = 0.07
+    
     def timerEvent(self):
         if self.level==8:
             self.draaiRing(0,1)
-            self.checkEndLevel()
         elif self.level==9:
             self.draaiRing(0,1)
-            self.checkEndLevel()
         elif self.level==11:
             self.draaiRing(0,1)
-            self.checkEndLevel()
-
+        elif self.level==12:
+            self.draaiRing(1,1)
+        elif self.level==15:
+            self.draaiRing(1,1)
+        elif self.level==16:
+            self.draaiRing(1,1)
+        self.checkEndLevel()
+    
     def checkEndLevel(self):
         status = self.achtergrond_patroon[self.current_ring][self.current_position]
         if status == 1: # cursor komt op rode pixel
