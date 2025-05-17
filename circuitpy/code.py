@@ -154,9 +154,6 @@ class RotaryGame:
         elif self.level==11:
             self.draaiRing(0,1)
             self.checkEndLevel()
-            
-            
-
 
     def checkEndLevel(self):
         status = self.achtergrond_patroon[self.current_ring][self.current_position]
