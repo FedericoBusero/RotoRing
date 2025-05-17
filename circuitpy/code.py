@@ -10,9 +10,6 @@ class RotaryGame:
         (25,0,0),    # 1 rood (verboden op te staan)
         (0,0,0)      # 2 zwart (doelpixel)
     ]
-    KLEUR_PAARS = 0
-    KLEUR_ROOD = 1
-    KLEUR_ZWART = 2
     cursor_color = (40, 40, 40)
     timing_interval = 1.0
     last_background_update = 0
