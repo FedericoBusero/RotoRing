@@ -213,6 +213,17 @@ class RotaryGame:
             self.draaiRing(1,2)
             self.timing_interval = 0.04
             self.timer_count = 1
+
+        elif self.level==17:
+            self.timer_count = 0
+            self.achtergrond_patroon[0][numpixel0//2] = 2
+            self.achtergrond_patroon[0][numpixel0*1//5] = 1
+            self.achtergrond_patroon[0][numpixel0*2//5] = 1
+            self.achtergrond_patroon[0][numpixel0*4//6] = 1
+            self.achtergrond_patroon[0][numpixel0*5//6] = 1
+            self.achtergrond_patroon[1][numpixel1//4] = 1
+            self.achtergrond_patroon[1][numpixel1*3//4] = 1
+            self.timing_interval = 0.1
     
     def timerEvent(self):
         numpixel0 = NUM_PIXELS[0]
@@ -247,6 +258,11 @@ class RotaryGame:
                 self.timer_count=1
             else:
                 self.timer_count = self.timer_count+1
+        elif self.level==17:
+            self.draaiRing(1,1)
+            if self.timer_count %3 == 0:
+                self.draaiRing(0,1)
+            self.timer_count = self.timer_count+1
         self.checkEndLevel()
     
     def checkEndLevel(self):
