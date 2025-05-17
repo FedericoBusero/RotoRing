@@ -13,6 +13,7 @@ class RotaryGame:
     cursor_color = (40, 40, 40)
     timing_interval = 1.0
     last_background_update = 0
+    timer_count = 0
     level = 1
 
     def __init__(self):
@@ -210,9 +211,13 @@ class RotaryGame:
             self.achtergrond_patroon[1][numpixel1//3*2] = 1
             self.achtergrond_patroon[1][numpixel1//3] = 1
             self.draaiRing(1,2)
-            self.timing_interval = 0.07
+            self.timing_interval = 0.04
+            self.timer_count = 1
     
     def timerEvent(self):
+        numpixel0 = NUM_PIXELS[0]
+        numpixel1 = NUM_PIXELS[1]
+        
         if self.level==8:
             self.draaiRing(0,1)
         elif self.level==9:
@@ -224,7 +229,24 @@ class RotaryGame:
         elif self.level==15:
             self.draaiRing(1,1)
         elif self.level==16:
-            self.draaiRing(1,1)
+            if self.timer_count%3 == 0:
+                self.draaiRing(1,1)
+            links = numpixel0 - self.timer_count
+            rechts = self.timer_count
+            self.achtergrond_patroon[0][0] = 2
+            for pos in range (1,numpixel0):
+                self.achtergrond_patroon[0][pos] = 0
+            for pos in range (3):
+                self.achtergrond_patroon[0][numpixel0*0+1+pos] = 1
+            for pos in range (3):
+                self.achtergrond_patroon[0][numpixel0-3+pos] = 1
+
+            self.achtergrond_patroon[0][links] = 1
+            self.achtergrond_patroon[0][rechts] = 1
+            if rechts >= links:
+                self.timer_count=1
+            else:
+                self.timer_count = self.timer_count+1
         self.checkEndLevel()
     
     def checkEndLevel(self):
