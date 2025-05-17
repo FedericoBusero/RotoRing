@@ -223,7 +223,7 @@ class RotaryGame:
             self.achtergrond_patroon[0][numpixel0*5//6] = 1
             self.achtergrond_patroon[1][numpixel1//4] = 1
             self.achtergrond_patroon[1][numpixel1*3//4] = 1
-            self.timing_interval = 0.1
+            self.timing_interval = 0.07
     
     def timerEvent(self):
         numpixel0 = NUM_PIXELS[0]
