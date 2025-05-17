@@ -27,11 +27,11 @@ class RotaryGame:
         
     def onRotary(self,step):
         self.current_position = (self.current_position + step) % NUM_PIXELS[self.current_ring]
-        self.checkEndLevel()
         if self.level==10 and self.current_ring==0:
             self.draaiRing(0,step)
         elif self.level==11 and self.current_ring==1:
             self.draaiRing(1,step)
+        self.checkEndLevel()
              
 
     def startGame(self):
