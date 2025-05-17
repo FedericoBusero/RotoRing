@@ -31,7 +31,7 @@ class RotaryGame:
             self.draaiRing(0,step)
         elif self.level==11 and self.current_ring==1:
             self.draaiRing(1,step)
-            elif self.level==13 and self.current_ring==1:
+        elif self.level==13 and self.current_ring==1:
             self.draaiRing(1,step)
         elif self.level==13 and self.current_ring==0:
             self.draaiRing(0,step)
