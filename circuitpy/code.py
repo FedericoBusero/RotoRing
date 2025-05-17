@@ -6,11 +6,10 @@ class RotaryGame:
     current_ring = 0
     current_position = 0  
     kleur = [
-        (2,1,2),     # 0 lichtpaars
-        (25,0,0),    # 1 rood (verboden op te staan)
-        (0,0,0)      # 2 zwart (doelpixel)
+        (2,1,2),     # 0 achtergrond (lichtpaars)
+        (25,0,0),    # 1 verboden op te staan (rood)
+        (0,0,0)      # 2 doel (zwart)
     ]
-
     cursor_color = (40, 40, 40)
     timing_interval = 1.0
     last_background_update = 0
@@ -29,6 +28,11 @@ class RotaryGame:
     def onRotary(self,step):
         self.current_position = (self.current_position + step) % NUM_PIXELS[self.current_ring]
         self.checkEndLevel()
+        if self.level==10 and self.current_ring==0:
+            self.draaiRing(0,step)
+        elif self.level==11 and self.current_ring==1:
+            self.draaiRing(1,step)
+             
 
     def startGame(self):
         self.current_ring = 0
@@ -111,9 +115,43 @@ class RotaryGame:
 
             self.achtergrond_patroon[1][0] = 2
             self.timing_interval = 0.02
+            
+        elif self.level==9:
+            self.current_ring = 1
+            self.current_position = numpixel1//2-5
+            self.achtergrond_patroon[0][0] = 1
+            self.achtergrond_patroon[1][numpixel1*1//4] = 1
+            self.achtergrond_patroon[1][numpixel1*3//4] = 1
+            self.achtergrond_patroon[1][numpixel1*1//2] = 1
+            self.achtergrond_patroon[1][0] = 1
+            self.achtergrond_patroon[1][numpixel1*0-4] = 2
+            self.draaiRing(1,2)
+            
+            self.timing_interval = 0.015
+        
+        elif self.level==10:
+            self.current_ring = 0
+            self.current_position = numpixel0//2
+            self.achtergrond_patroon[0][0] = 2
+            self.achtergrond_patroon[1][numpixel1*3//4] = 1
+            self.achtergrond_patroon[1][numpixel1//4] = 1
+            self.draaiRing(1,4)
+            
+        elif self.level==11:
+            self.current_ring = 1
+            self.current_position = numpixel1//2
+            self.achtergrond_patroon[1][0] = 2
+            self.achtergrond_patroon[0][0] = 1
+            self.timing_interval = 0.015
 
     def timerEvent(self):
         if self.level==8:
+            self.draaiRing(0,1)
+            self.checkEndLevel()
+        elif self.level==9:
+            self.draaiRing(0,1)
+            self.checkEndLevel()
+        elif self.level==11:
             self.draaiRing(0,1)
             self.checkEndLevel()
 
@@ -127,6 +165,7 @@ class RotaryGame:
             #yes, next level
             self.ledShowNextLevel()
             self.level = self.level+1
+            print(self.level)
             self.startGame()
 
     def ledShowGameOver(self):
@@ -207,3 +246,4 @@ while True:
 
     game.loop()
     game.updatePixels()
+
