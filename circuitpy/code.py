@@ -6,9 +6,9 @@ class RotaryGame:
     current_ring = 0
     current_position = 0  
     kleur = [
-        (2,1,2),     # 0 lichtpaars
-        (25,0,0),    # 1 rood (verboden op te staan)
-        (0,0,0)      # 2 zwart (doelpixel)
+        (2,1,2),     # 0 achtergrond (lichtpaars)
+        (25,0,0),    # 1 verboden op te staan (rood)
+        (0,0,0)      # 2 doel (zwart)
     ]
     cursor_color = (40, 40, 40)
     timing_interval = 1.0
