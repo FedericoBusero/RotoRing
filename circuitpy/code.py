@@ -14,6 +14,7 @@ class RotaryGame:
     timing_interval = 1.0
     last_background_update = 0
     timer_count = 0
+    start_time_game = 0
     level = 1
 
     def __init__(self):
@@ -23,7 +24,7 @@ class RotaryGame:
     def startGame(self):
         numpixel0 = NUM_PIXELS[0]
         numpixel1 = NUM_PIXELS[1]
-
+    
         self.current_ring = 0
         self.current_position = 0
         self.achtergrond_patroon = [
@@ -34,6 +35,7 @@ class RotaryGame:
         #TODO shortcuts voor achtergrondpatroon
        
         if self.level==1:
+            self.start_time_game = 0
             self.current_ring = 1
             self.current_position = numpixel1*3//4
             self.achtergrond_patroon[0][0] = 2
@@ -205,7 +207,10 @@ class RotaryGame:
     def timerEvent(self):
         numpixel0 = NUM_PIXELS[0]
         numpixel1 = NUM_PIXELS[1]
-
+        
+        if self.start_time_game == 0:
+            self.start_time_game = time.monotonic()
+        
         if self.level==8:
             self.draaiRing(0,1)
         elif self.level==9:
@@ -240,15 +245,20 @@ class RotaryGame:
             if self.timer_count %3 == 0:
                 self.draaiRing(0,1)
             self.timer_count = self.timer_count+1
+                
         self.checkEndLevel()
 
     def onButtonPressed(self):
+        if self.start_time_game == 0:
+            self.start_time_game = time.monotonic()
         old_ring = self.current_ring
         self.current_ring = 1-old_ring
         self.current_position = self.current_position = (round(self.current_position*NUM_PIXELS[self.current_ring]/NUM_PIXELS[old_ring]))% NUM_PIXELS[self.current_ring]
         self.checkEndLevel()
         
     def onRotary(self,step):
+        if self.start_time_game == 0:
+            self.start_time_game = time.monotonic()
         self.current_position = (self.current_position + step) % NUM_PIXELS[self.current_ring]
         if self.level==10 and self.current_ring==0:
             self.draaiRing(0,step)
@@ -275,6 +285,9 @@ class RotaryGame:
             self.ledShowNextLevel()
             self.level = self.level+1
             print(self.level)
+            if self.level==18:
+                self.endGameShow()
+                self.level=1
             self.startGame()
 
     def ledShowGameOver(self):
@@ -314,6 +327,21 @@ class RotaryGame:
             time.sleep(0.01)
         time.sleep(0.200)
         #TODO: licht laten dimmen
+        
+        
+    def endGameShow(self):
+        playtime = time.monotonic()-self.start_time_game
+        minutes = playtime//60
+        seconds = round(playtime)%60
+        for ring in range (2):
+            for i in range(NUM_PIXELS[ring]):
+                pixels[i+LED_START[ring]] = (0,0,0)
+        for i in range(min(minutes,NUM_PIXELS[1])):
+            pixels[i+LED_START[1]] = (0,0,25)
+        for i in range(min(seconds*NUM_PIXELS[0]/60,NUM_PIXELS[0])):
+            pixels[i+LED_START[0]] = (0,0,25)
+        pixels.show()
+        time.sleep(10)
         
     def loop(self):
         # calls timerEvent() every timing_interval seconds
