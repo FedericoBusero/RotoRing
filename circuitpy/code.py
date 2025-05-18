@@ -139,7 +139,7 @@ class RotaryGame:
             self.achtergrond_patroon[1][numpixel1//2] = 1
             self.achtergrond_patroon[0][numpixel0//4*3+2] = 1
             self.achtergrond_patroon[0][numpixel0//4*3-5] = 1
-            self.timing_interval = 0.03
+            self.timing_interval = 1.2/numpixel1
             for pos in range (6):
                 self.achtergrond_patroon[0][pos+12] = 1
             for pos in range (3):
@@ -176,7 +176,7 @@ class RotaryGame:
             self.achtergrond_patroon[1][numpixel1//2] = 1
             self.achtergrond_patroon[1][0] = 1
             self.draaiRing(1,2)
-            self.timing_interval = 0.03
+            self.timing_interval = 1.2/numpixel1
 
         elif self.level==16:
             self.current_ring = 0
@@ -202,7 +202,7 @@ class RotaryGame:
             self.achtergrond_patroon[0][numpixel0*5//6] = 1
             self.achtergrond_patroon[1][numpixel1//4] = 1
             self.achtergrond_patroon[1][numpixel1*3//4] = 1
-            self.timing_interval = 0.07
+            self.timing_interval = 2.8/numpixel1
     
     def timerEvent(self):
         numpixel0 = NUM_PIXELS[0]
