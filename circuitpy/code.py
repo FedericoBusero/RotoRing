@@ -3,6 +3,8 @@ from config import *
 #TODO: meer commentaar
 
 class RotaryGame:
+    numpixel0 = NUM_PIXELS[0]
+    numpixel1 = NUM_PIXELS[1]
     current_ring = 0
     current_position = 0  
     kleur = [
@@ -20,40 +22,14 @@ class RotaryGame:
         last_background_update = time.monotonic()
         self.startGame()
 
-    def onButtonPressed(self):
-        old_ring = self.current_ring
-        self.current_ring = 1-old_ring
-        self.current_position = self.current_position = (round(self.current_position*NUM_PIXELS[self.current_ring]/NUM_PIXELS[old_ring]))% NUM_PIXELS[self.current_ring]
-        self.checkEndLevel()
-        
-    def onRotary(self,step):
-        self.current_position = (self.current_position + step) % NUM_PIXELS[self.current_ring]
-        if self.level==10 and self.current_ring==0:
-            self.draaiRing(0,step)
-        elif self.level==11 and self.current_ring==1:
-            self.draaiRing(1,step)
-        elif self.level==13 and self.current_ring==1:
-            self.draaiRing(1,step)
-        elif self.level==13 and self.current_ring==0:
-            self.draaiRing(0,step)
-        elif self.level==14 and self.current_ring==1:
-            self.draaiRing(1,step)
-        elif self.level==15 and self.current_ring==0:
-            self.draaiRing(0,step)
-        self.checkEndLevel()
-
     def startGame(self):
         self.current_ring = 0
         self.current_position = 0
         self.achtergrond_patroon = [
-         [0 for i in range(NUM_PIXELS[0])],
-         [0 for i in range(NUM_PIXELS[1])]
+         [0 for i in range(numpixel0)],
+         [0 for i in range(numpixel1)]
         ]
-        
-        
-        #shortcuts
-        numpixel0 = NUM_PIXELS[0]
-        numpixel1 = NUM_PIXELS[1]
+
         #TODO shortcuts voor achtergrondpatroon
        
         if self.level==1:
@@ -226,9 +202,6 @@ class RotaryGame:
             self.timing_interval = 0.07
     
     def timerEvent(self):
-        numpixel0 = NUM_PIXELS[0]
-        numpixel1 = NUM_PIXELS[1]
-        
         if self.level==8:
             self.draaiRing(0,1)
         elif self.level==9:
@@ -264,7 +237,29 @@ class RotaryGame:
                 self.draaiRing(0,1)
             self.timer_count = self.timer_count+1
         self.checkEndLevel()
-    
+
+    def onButtonPressed(self):
+        old_ring = self.current_ring
+        self.current_ring = 1-old_ring
+        self.current_position = self.current_position = (round(self.current_position*NUM_PIXELS[self.current_ring]/NUM_PIXELS[old_ring]))% NUM_PIXELS[self.current_ring]
+        self.checkEndLevel()
+        
+    def onRotary(self,step):
+        self.current_position = (self.current_position + step) % NUM_PIXELS[self.current_ring]
+        if self.level==10 and self.current_ring==0:
+            self.draaiRing(0,step)
+        elif self.level==11 and self.current_ring==1:
+            self.draaiRing(1,step)
+        elif self.level==13 and self.current_ring==1:
+            self.draaiRing(1,step)
+        elif self.level==13 and self.current_ring==0:
+            self.draaiRing(0,step)
+        elif self.level==14 and self.current_ring==1:
+            self.draaiRing(1,step)
+        elif self.level==15 and self.current_ring==0:
+            self.draaiRing(0,step)
+        self.checkEndLevel()
+
     def checkEndLevel(self):
         status = self.achtergrond_patroon[self.current_ring][self.current_position]
         if status == 1: # cursor komt op rode pixel
