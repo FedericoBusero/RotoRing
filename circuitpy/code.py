@@ -26,8 +26,8 @@ class RotaryGame:
         self.current_ring = 0
         self.current_position = 0
         self.achtergrond_patroon = [
-         [0 for i in range(numpixel0)],
-         [0 for i in range(numpixel1)]
+         [0 for i in range(NUM_PIXELS[0])],
+         [0 for i in range(NUM_PIXELS[1])]
         ]
 
         #TODO shortcuts voor achtergrondpatroon
