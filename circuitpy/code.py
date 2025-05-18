@@ -191,7 +191,7 @@ class RotaryGame:
         elif self.level==15:
             self.current_ring = 0
             self.current_position = numpixel0//2+3
-            self.achtergrond_patroon[0][numpixel0*0+3] = 2
+            self.achtergrond_patroon[0][3] = 2
             for pos in range (numpixel0//6):
                 self.achtergrond_patroon[0][pos*6] = 1
             self.achtergrond_patroon[1][numpixel1//2] = 1
@@ -204,7 +204,7 @@ class RotaryGame:
             self.current_position = numpixel0//2
             self.achtergrond_patroon[0][0] = 2
             for pos in range (3):
-                self.achtergrond_patroon[0][numpixel0*0+1+pos] = 1
+                self.achtergrond_patroon[0][pos+1] = 1
             for pos in range (3):
                 self.achtergrond_patroon[0][numpixel0-3+pos] = 1
             self.achtergrond_patroon[1][0] = 1
@@ -248,7 +248,7 @@ class RotaryGame:
             for pos in range (1,numpixel0):
                 self.achtergrond_patroon[0][pos] = 0
             for pos in range (3):
-                self.achtergrond_patroon[0][numpixel0*0+1+pos] = 1
+                self.achtergrond_patroon[0][pos+1] = 1
             for pos in range (3):
                 self.achtergrond_patroon[0][numpixel0-3+pos] = 1
 
