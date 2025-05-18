@@ -3,8 +3,6 @@ from config import *
 #TODO: meer commentaar
 
 class RotaryGame:
-    numpixel0 = NUM_PIXELS[0]
-    numpixel1 = NUM_PIXELS[1]
     current_ring = 0
     current_position = 0  
     kleur = [
@@ -23,6 +21,9 @@ class RotaryGame:
         self.startGame()
 
     def startGame(self):
+        numpixel0 = NUM_PIXELS[0]
+        numpixel1 = NUM_PIXELS[1]
+
         self.current_ring = 0
         self.current_position = 0
         self.achtergrond_patroon = [
@@ -202,6 +203,9 @@ class RotaryGame:
             self.timing_interval = 0.07
     
     def timerEvent(self):
+        numpixel0 = NUM_PIXELS[0]
+        numpixel1 = NUM_PIXELS[1]
+
         if self.level==8:
             self.draaiRing(0,1)
         elif self.level==9:
