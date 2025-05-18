@@ -23,7 +23,7 @@ class RotaryGame:
     def onButtonPressed(self):
         old_ring = self.current_ring
         self.current_ring = 1-old_ring
-        self.current_position = round(self.current_position*NUM_PIXELS[self.current_ring]/NUM_PIXELS[old_ring])
+        self.current_position = self.current_position = (round(self.current_position*NUM_PIXELS[self.current_ring]/NUM_PIXELS[old_ring]))% NUM_PIXELS[self.current_ring]
         self.checkEndLevel()
         
     def onRotary(self,step):
