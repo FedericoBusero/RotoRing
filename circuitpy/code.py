@@ -132,7 +132,7 @@ class RotaryGame:
             self.achtergrond_patroon[1][numpixel1*3//4] = 1
             self.achtergrond_patroon[1][numpixel1*1//2] = 1
             self.achtergrond_patroon[1][0] = 1
-            self.achtergrond_patroon[1][numpixel1*0-4] = 2
+            self.achtergrond_patroon[1][numpixel1-4] = 2
             self.draaiRing(1,2)
             
             self.timing_interval = 0.015
