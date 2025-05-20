@@ -208,9 +208,6 @@ class RotaryGame:
         numpixel0 = NUM_PIXELS[0]
         numpixel1 = NUM_PIXELS[1]
         
-        if self.start_time_game == 0:
-            self.start_time_game = time.monotonic()
-        
         if self.level==8:
             self.draaiRing(0,1)
         elif self.level==9:
