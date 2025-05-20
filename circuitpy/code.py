@@ -251,6 +251,7 @@ class RotaryGame:
         old_ring = self.current_ring
         self.current_ring = 1-old_ring
         self.current_position = self.current_position = (round(self.current_position*NUM_PIXELS[self.current_ring]/NUM_PIXELS[old_ring]))% NUM_PIXELS[self.current_ring]
+        self.updatePixels()
         self.checkEndLevel()
         
     def onRotary(self,step):
@@ -269,6 +270,7 @@ class RotaryGame:
             self.draaiRing(1,step)
         elif self.level==15 and self.current_ring==0:
             self.draaiRing(0,step)
+        self.updatePixels()
         self.checkEndLevel()
 
     def checkEndLevel(self):
@@ -288,6 +290,7 @@ class RotaryGame:
             self.startGame()
 
     def ledShowGameOver(self):
+        time.sleep(0.1)
         ring = self.current_ring
         for i in range(NUM_PIXELS[ring]//2+1):
             pos1 = (self.current_position+i)%NUM_PIXELS[ring]
