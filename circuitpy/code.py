@@ -345,7 +345,7 @@ class RotaryGame:
         for i in range(min(seconds*NUM_PIXELS[0]/60,NUM_PIXELS[0])):
             pixels[i+LED_START[0]] = (0,0,25)
         pixels.show()
-        time.sleep(20)
+        time.sleep(10)
         
     def loop(self):
         # calls timerEvent() every timing_interval seconds
