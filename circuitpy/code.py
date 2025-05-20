@@ -176,7 +176,7 @@ class RotaryGame:
             self.achtergrond_patroon[1][numpixel1//2] = 1
             self.achtergrond_patroon[1][0] = 1
             self.draaiRing(1,2)
-            self.timing_interval = 1.2/numpixel1
+            self.timing_interval = 2/numpixel1
 
         elif self.level==16:
             self.current_ring = 0
