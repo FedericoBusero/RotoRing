@@ -3,6 +3,7 @@ from config import *
 #TODO: meer commentaar
 
 class RotaryGame:
+    last_rotary_encoder_position = 0  
     current_ring = 0
     current_position = 0  
     kleur = [
@@ -31,6 +32,8 @@ class RotaryGame:
          [0 for i in range(NUM_PIXELS[0])],
          [0 for i in range(NUM_PIXELS[1])]
         ]
+        
+        self.flush_rotary_encoder()
 
         #TODO shortcuts voor achtergrondpatroon
        
@@ -347,7 +350,24 @@ class RotaryGame:
         pixels.show()
         time.sleep(10)
         
+    def flush_rotary_encoder(self):
+        self.last_rotary_encoder_position = encoder.position
+        
     def loop(self):
+        switch_button.update()
+        if switch_button.fell:
+            game.onButtonPressed()
+
+        switch_rotarybutton.update()
+        if switch_rotarybutton.fell:
+            game.onButtonPressed()
+            
+        # Check rotary encoder movement immediately
+        new_position = encoder.position
+        if new_position != self.last_rotary_encoder_position:
+            steps = new_position - self.last_rotary_encoder_position
+            self.last_rotary_encoder_position = new_position
+            game.onRotary(steps) # calls flush_rotary_encoder
         # calls timerEvent() every timing_interval seconds
         current_time = time.monotonic()
         if current_time - self.last_background_update >= self.timing_interval:
@@ -368,23 +388,8 @@ class RotaryGame:
 
 
 # main
-current_rotary_position = 0  
+
 game = RotaryGame()
 while True:
-    switch_button.update()
-    if switch_button.fell:
-        game.onButtonPressed()
-
-    switch_rotarybutton.update()
-    if switch_rotarybutton.fell:
-        game.onButtonPressed()
-        
-    # Check rotary encoder movement immediately
-    new_position = encoder.position
-    if new_position != current_rotary_position:
-        game.onRotary(new_position - current_rotary_position)
-        current_rotary_position = new_position
-
     game.loop()
     game.updatePixels()
-
