@@ -376,6 +376,7 @@ class RotaryGame:
             steps = new_position - self.last_rotary_encoder_position
             self.last_rotary_encoder_position = new_position
             game.onRotary(steps) # calls flush_rotary_encoder
+
         # calls timerEvent() every timing_interval seconds
         current_time = time.monotonic()
         if current_time - self.last_background_update >= self.timing_interval:
