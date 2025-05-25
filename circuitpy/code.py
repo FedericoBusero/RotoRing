@@ -257,7 +257,6 @@ class RotaryGame:
         if self.start_time_game == 0:
             self.start_time_game = time.monotonic()
 
-
         step = 1 if steps > 0 else -1 if steps < 0 else 0
         for count in range (abs(steps)):
             self.current_position = (self.current_position + step) % NUM_PIXELS[self.current_ring]
