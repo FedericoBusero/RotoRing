@@ -18,10 +18,6 @@ class RotaryGame:
     start_time_game = 0
     level = 1
 
-    def __init__(self):
-        last_background_update = time.monotonic()
-        self.startGame()
-
     def startGame(self):
         numpixel0 = NUM_PIXELS[0]
         numpixel1 = NUM_PIXELS[1]
@@ -253,7 +249,7 @@ class RotaryGame:
             self.start_time_game = time.monotonic()
         old_ring = self.current_ring
         self.current_ring = 1-old_ring
-        self.current_position = self.current_position = (round(self.current_position*NUM_PIXELS[self.current_ring]/NUM_PIXELS[old_ring]))% NUM_PIXELS[self.current_ring]
+        self.current_position = (round(self.current_position*NUM_PIXELS[self.current_ring]/NUM_PIXELS[old_ring]))% NUM_PIXELS[self.current_ring]
         self.updatePixels()
         self.checkEndLevel()
         
@@ -353,6 +349,18 @@ class RotaryGame:
     def flush_rotary_encoder(self):
         self.last_rotary_encoder_position = encoder.position
         
+    def draaiRing(self,ringnr,stappen):
+        self.achtergrond_patroon[ringnr] = self.achtergrond_patroon[ringnr][-stappen:] + self.achtergrond_patroon[ringnr][:-stappen]
+            
+    def updatePixels(self):
+        for ring in range (2):
+            for i in range(NUM_PIXELS[ring]):
+                pixels[i+LED_START[ring]] = self.kleur[self.achtergrond_patroon[ring][i]]
+
+        # Add foreground pixel to current pattern
+        pixels[self.current_position+LED_START[self.current_ring]] = self.cursor_color       
+        pixels.show()
+        
     def loop(self):
         switch_button.update()
         if switch_button.fell:
@@ -373,23 +381,14 @@ class RotaryGame:
         if current_time - self.last_background_update >= self.timing_interval:
             self.timerEvent()
             self.last_background_update = current_time
-
-    def draaiRing(self,ringnr,stappen):
-        self.achtergrond_patroon[ringnr] = self.achtergrond_patroon[ringnr][-stappen:] + self.achtergrond_patroon[ringnr][:-stappen]
             
-    def updatePixels(self):
-        for ring in range (2):
-            for i in range(NUM_PIXELS[ring]):
-                pixels[i+LED_START[ring]] = self.kleur[self.achtergrond_patroon[ring][i]]
-
-        # Add foreground pixel to current pattern
-        pixels[self.current_position+LED_START[self.current_ring]] = self.cursor_color       
-        pixels.show()
-
+        self.updatePixels()
+        
+    def run(self):
+        self.startGame()
+        while True:
+            self.loop()
 
 # main
-
 game = RotaryGame()
-while True:
-    game.loop()
-    game.updatePixels()
+game.run()
